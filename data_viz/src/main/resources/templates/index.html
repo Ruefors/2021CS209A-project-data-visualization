@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header height = "350px"></el-header>
+        <el-main height = "750px">
+            <template>
+                <el-table
+                        :data="tableData"
+                        height="750"
+                        border
+                        style="width: 100%">
+                    <el-table-column
+                            prop="iso_code"
+                            label="iso_code"
+                            width="180">
+                    </el-table-column>
+                    <el-table-column
+                            prop="country"
+                            label="国家"
+                            width="180">
+                    </el-table-column>
+                    <el-table-column
+                            prop="date"
+                            label="日期"
+                            width="180">
+                    </el-table-column>
+                    <el-table-column
+                            prop="new_cases"
+                            label="新增人数">
+                    </el-table-column>
+                    <el-table-column
+                            prop="new_deaths"
+                            label="新增死亡人数">
+                    </el-table-column>
+                    <el-table-column
+                            prop="total_cases"
+                            label="总确诊人数">
+                    </el-table-column>
+                    <el-table-column
+                            prop="total_deaths"
+                            label="总死亡人数">
+                    </el-table-column>
+                </el-table>
+            </template>
+            <el-pagination
+                    background
+                    layout="prev, pager, next, jumper"
+                    @current-change="getCurrentPage"
+                    :current-page="currentPage"
+                    :page-size="pageSize"
+                    :total="total">
+            </el-pagination>
+        </el-main>
+        <el-footer height = "150px"></el-footer>
+    </el-container>
+
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data() {
+      return {
+        tableData: [],
+        currentPage: 0,
+        pageSize: 20,
+        total:20,
+
+        }
+      },
+    mounted: function() {
+      this.loadStudents()
+    },
+
+    methods: {
+      getPageSize(){
+           var _this = this
+           axios.get("/pageSize").then(resp => {
+           _this.total = resp.data
+           console.log(resp.data)
+        })
+      },
+      loadStudents() {
+        var _this = this
+        axios.get("/inde").then(resp => {
+            _this.tableData = resp.data.data
+            _this.getPageSize()
+        })
+      },
+      getCurrentPage(val) {
+          var _this = this
+          axios.get('/page', {
+       params: {
+           ID: val}
+        }).then(resp => {
+        console.log(resp.data)
+            _this.tableData = resp.data.data
+        })
+      }
+    }
+   })
+
+  </script>
+
+
+</html>
