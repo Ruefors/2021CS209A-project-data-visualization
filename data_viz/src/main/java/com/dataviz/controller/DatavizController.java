@@ -37,11 +37,22 @@ public class DatavizController {
         return curpage;
     }
 
+    @GetMapping("/sort")
+    @ResponseBody
+    public String sort(String prop, String order) {
+        System.out.println(prop);
+        System.out.println(order);
+        return "hhhh";
+    }
+
+
     @RequestMapping(value = "/pageSize",method = RequestMethod.GET)
     @ResponseBody
     public int pagesize() {
         int s = df.total_data.data.size();
         return s;
     }
+
+
 
 }

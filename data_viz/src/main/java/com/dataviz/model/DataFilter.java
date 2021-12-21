@@ -13,4 +13,8 @@ public class DataFilter {
         }
         return page_data;
     }
+
+    public void SortData(String order){
+
+    }
 }
