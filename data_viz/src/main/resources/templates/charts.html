@@ -150,13 +150,12 @@
                 tooltip: {
                     trigger: 'item'
                 },
-                series: [
-                    {
-                        name: 'map',
-                        type: 'pie',
-                        data: data
-                    }
-                ]
+                series:
+                {
+                    name: 'map',
+                    type: 'pie',
+                    data: data,
+                }
             }
             let currentOption = mapOption;
             myChart.setOption(mapOption);
