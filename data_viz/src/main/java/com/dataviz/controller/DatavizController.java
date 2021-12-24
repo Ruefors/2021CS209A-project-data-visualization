@@ -1,5 +1,6 @@
 package com.dataviz.controller;
 
+import com.dataviz.model.MetaData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,6 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import com.dataviz.model.DataFilter;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.zip.CheckedInputStream;
 
 @Controller
@@ -15,13 +19,18 @@ import java.util.zip.CheckedInputStream;
 public class DatavizController {
     DataFilter df;
 
-
     @RequestMapping(value = "/inde",method = RequestMethod.GET)
     @ResponseBody
     public CovidData hello() {
         df = new DataFilter();
-        df.total_data = new CovidData();
-        df.total_data.readData("C:\\Learning\\大四（上）\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\static\\owid-covid-data.csv",",");
+        df.original_data= new CovidData();
+        df.original_data.readData("D:\\gitlib\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\static\\owid-covid-data.csv",",");
+        df.current_data = df.original_data;
+        Collections.sort(df.current_data.data,new Comparator<MetaData>(){
+            public int compare(MetaData arg0, MetaData arg1) {
+                return arg0.iso_code.compareTo(arg1.iso_code);
+            }
+        });
         CovidData curpage = df.getCurrentPages(1, 20);
         return curpage;
     }
@@ -30,8 +39,8 @@ public class DatavizController {
     @ResponseBody
     public CovidData argParam(Integer ID) {
         int pageSize = 20;
-        if(ID == df.total_data.data.size()/20+1){
-            pageSize = df.total_data.data.size() - (ID-1)*20;
+        if(ID == df.current_data.data.size()/20+1){
+            pageSize = df.current_data.data.size() - (ID-1)*20;
         }
         CovidData curpage = df.getCurrentPages(ID, pageSize);
         return curpage;
@@ -40,16 +49,25 @@ public class DatavizController {
     @GetMapping("/sort")
     @ResponseBody
     public String sort(String prop, String order) {
-        System.out.println(prop);
-        System.out.println(order);
-        return "hhhh";
+        df.sort_col = prop;
+        df.order = order;
+        df.SortData();
+        return "hhh";
     }
 
+    @GetMapping("/search")
+    @ResponseBody
+    public String search(String Type, String Content) {
+        System.out.println(Type);
+        System.out.println(Content);
+        df.Search(Integer.parseInt(Type), Content);
+        return "hhh1";
+    }
 
     @RequestMapping(value = "/pageSize",method = RequestMethod.GET)
     @ResponseBody
     public int pagesize() {
-        int s = df.total_data.data.size();
+        int s = df.current_data.data.size();
         return s;
     }
 

@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DatavizApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DatavizApplication.class, args);
-
 	}
 
 }

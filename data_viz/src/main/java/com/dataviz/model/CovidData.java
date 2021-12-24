@@ -6,29 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
-class MetaData{
-    public String iso_code;
-    public String country;
-    public Date date;
-    public int new_cases;
-    public int new_deaths;
-    public int total_deaths;
-    public int total_cases;
-    private static SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-
-    public MetaData(String iso_code, String country, String date, int new_cases, int new_deaths, int total_deaths, int total_cases) throws ParseException {
-        this.iso_code = iso_code;
-        this.country = country;
-        this.date = dateformat.parse(date);
-        this.new_cases = new_cases;
-        this.new_deaths = new_deaths;
-        this.total_deaths = total_deaths;
-        this.total_cases = total_cases;
-    }
-}
 
 public class CovidData {
     public ArrayList<MetaData> data;
@@ -69,17 +48,22 @@ public class CovidData {
     }
 
     //test
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         CovidData cd = new CovidData();
         cd.readData("D:\\gitlib\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\static\\owid-covid-data.csv", ",");
         System.out.println(cd.data.size());
-        int j = 0;
-        while(true) {
-            for (int i = 0; i < 20; i++) {
-                MetaData m = cd.data.get(i + 20 * j);
-                System.out.println(i + 20 * j);
+        Collections.sort(cd.data,new Comparator<MetaData>(){
+            public int compare(MetaData arg0, MetaData arg1) {
+                return arg0.new_cases - arg1.new_cases;}
+        });
+        Collections.sort(cd.data,new Comparator<MetaData>(){
+            public int compare(MetaData arg0, MetaData arg1) {
+                return arg1.date.compareTo(arg0.date);}
+        });
 
-            }
-            j++;
-        }    }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse("2019-10-01");
+        int j = date.getYear();
+        System.out.println(j);
+    }
 }
