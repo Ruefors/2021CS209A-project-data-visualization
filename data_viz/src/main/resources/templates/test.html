@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+       <title>echarts点击事件调用模态框</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/qushencn/qushencn.github.io/master/img/shen.png" type="image/gif" />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts-en.common.js"></script>
+<body>
+ 
+ <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    
+<!-- 按钮触发模态框 -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="echartstest">
+	
+</button>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content" style="width:800px;height:550px;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h3 class="modal-title" id="myModalLabel" style="text-align:center">
+					
+				</h3>
+			</div>
+			<div class="modal-body" style="width:800px;">
+			<div id="main2" style="width:800px;height:400px;">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button type="button" class="btn btn-primary">
+					提交更改
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+ 
+ 
+ 
+    <script type="text/javascript">
+    	
+    	$(function(){
+    		
+    		 $("#echartstest").hide();
+    	});
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        var myChart2 = echarts.init(document.getElementById('main2'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: ["2013","2014","2015","2016","2017","2018"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+ 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        
+        
+   myChart.on('click', function (params) {
+     $("#myModalLabel").empty();
+     $("#myModalLabel").append(params.name);
+     $("#myModalLabel").append("年销量情况");
+  
+  $('.btn-lg').click();
+   
+     var option2 = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: ["1","2","3","4","5","6","7","8","9","10","11","12"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20,5, 20, 36, 10, 10, 20]
+            }]
+        };
+        
+          // 使用刚指定的配置项和数据显示图表。
+        myChart2.setOption(option2);
+    
+});
+ 
+      
+    </script>
