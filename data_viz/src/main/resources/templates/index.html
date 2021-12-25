@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <!-- import CSS -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/index3.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 
 </head>
@@ -13,7 +13,8 @@
 <body>
     <div id="app">
         <el-container>
-            <el-header height="150px">
+        <el-container>
+            <el-header height="250px">
                 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
                     <a class="navbar-brand" href="#">Dash_Table</a>
                     <ul class="navbar-nav">
@@ -32,23 +33,45 @@
                         </li>
                     </ul>
                 </nav>
+                <el-row :gutter="20">
+                    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+                    <el-col :span="6" :offset="6"><div class="grid-content bg-purple"></div></el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="6" :offset="6"><div class="grid-content bg-purple"></div></el-col>
+                    <el-col :span="6" :offset="6"><div class="grid-content bg-purple"></div></el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="10" :offset="12"><div class="grid-content bg-purple">
+                        <div style="margin-top: 0px;padding-top: 5px;">
+                            <el-input placeholder="请输入内容" v-model="input" class="input-with-select">
+                                <el-select class="search-type" v-model="select" slot="prepend" placeholder="请选择">
+                                    <el-option label="国家名称" value="1"></el-option>
+                                    <el-option label="日期" value="2"></el-option>
+                                    <el-option label="iso_code" value="3"></el-option>
+                                </el-select>
+                                <el-button @click="searchData" slot="append" icon="el-icon-search"></el-button>
+                            </el-input>
+                        </div>
+                    </div></el-col>
+                </el-row>
             </el-header>
-            <el-main height="750px">
+            <el-main height="550px">
                 <template>
-                    <el-table @sort-change='sortChange' :data="tableData" height="750" border style="width: 100%">
+                    <el-table @sort-change='sortChange' :data="tableData" height="450px"  width = "55%"  style="width: 100%">
                         <el-table-column prop="iso_code" label="iso_code" width="180">
                         </el-table-column>
-                        <el-table-column prop="country" label="国家" width="180">
+                        <el-table-column prop="country"  label="国家" width="180">
                         </el-table-column>
-                        <el-table-column prop="date" label="日期" width="180">
+                        <el-table-column sortable='custom' prop="sdate" label="日期" width="180">
                         </el-table-column>
                         <el-table-column sortable='custom' prop="new_cases" label="新增人数">
                         </el-table-column>
-                        <el-table-column prop="new_deaths" label="新增死亡人数">
+                        <el-table-column sortable='custom' prop="new_deaths" label="新增死亡人数">
                         </el-table-column>
-                        <el-table-column prop="total_cases" label="总确诊人数">
+                        <el-table-column sortable='custom' prop="total_cases" label="总确诊人数">
                         </el-table-column>
-                        <el-table-column prop="total_deaths" label="总死亡人数">
+                        <el-table-column sortable='custom' prop="total_deaths" label="总死亡人数">
                         </el-table-column>
                     </el-table>
                 </template>
@@ -56,8 +79,9 @@
                     :current-page="currentPage" :page-size="pageSize" :total="total">
                 </el-pagination>
             </el-main>
-            <el-footer height="150px"></el-footer>
+            <el-footer height="50px"></el-footer>
         </el-container>
+            <el-container>
 
     </div>
 </body>
@@ -78,14 +102,17 @@
                 activeIndex: '1',
                 activeIndex2: '1',
                 tableData: [],
-                currentPage: 0,
+                currentPage: 1,
                 pageSize: 20,
                 total: 20,
+                input: '',
+                select: '',
+                alertmsg: '',
 
             }
         },
         mounted: function () {
-            this.loadStudents()
+            this.loadData()
         },
 
         methods: {
@@ -100,7 +127,7 @@
                     }
                 }).then(resp => {
                     console.log(resp.data)
-                    _this.tableData = resp.data.data
+                    _this.getCurrentPage(_this.currentPage)
                 })
 
             },
@@ -111,15 +138,17 @@
                     console.log(resp.data)
                 })
             },
-            loadStudents() {
+            loadData() {
                 var _this = this
                 axios.get("/inde").then(resp => {
                     _this.tableData = resp.data.data
                     _this.getPageSize()
+
                 })
             },
             getCurrentPage(val) {
                 var _this = this
+                _this.currentPage = val
                 axios.get('/page', {
                     params: {
                         ID: val
@@ -128,6 +157,42 @@
                     console.log(resp.data)
                     _this.tableData = resp.data.data
                 })
+            },
+            searchData(){
+                var _this = this
+                if(_this.select.length==0){
+                    _this.alertmsg = '请输入需要搜索的类型'
+                    _this.alert1()
+                    return
+                }
+                else if(_this.select=='2' && _this.input != ""){
+                    var re = _this.input.match(/^((\d{4})(\/|-)(\d{2})(\/|-)(\d{2}))|(\d{4})(\/|-)(\d{2})|(\d{4})$/);
+                    if(re == null) {
+                        _this.alertmsg = "请输入正确的日期格式，搜索年月日: yyyy-mm-dd or yyyy/mm/dd \n 搜索年月: yyyy-mm or yyyy/mm \n 搜索年: yyyy \n"
+                        _this.alert1()
+                        return
+                    }
+                }
+
+                axios.get('/search', {
+                    params: {
+                        Type: _this.select,
+                        Content: _this.input
+                    }
+                }).then(resp => {
+                    _this.getPageSize()
+                    _this.getCurrentPage(_this.currentPage)
+                    console.log(resp.data);
+                })
+            },
+            alert1() {
+                var _this = this
+                const h = this.$createElement;
+                this.$notify({
+                    title: '搜索提示',
+                    duration: 1000,
+                    message: h('i', { style: 'color: #6ec8bf'}, _this.alertmsg)
+                });
             },
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
