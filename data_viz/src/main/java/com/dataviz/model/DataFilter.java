@@ -1,9 +1,11 @@
 package com.dataviz.model;
 
 
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 public class DataFilter {
     // every page contains 20 entries
@@ -27,7 +29,7 @@ public class DataFilter {
     public void Search(int type, String content){
         this.current_data = this.original_data;
         if(content.equals("")) {
-            
+
             return;
         }
         switch(type){
@@ -109,16 +111,10 @@ public class DataFilter {
         }
         else if(this.sort_col.equals("sdate")){
             if(this.order.equals("ascending")){
-                Collections.sort(this.current_data.data,new Comparator<MetaData>(){
-                    public int compare(MetaData arg0, MetaData arg1) {
-                        return arg1.date.compareTo(arg0.date);}
-                });
+                this.current_data.data.sort((arg0, arg1) -> arg1.date.compareTo(arg0.date));
             }
             else if(this.order.equals("descending")){
-                Collections.sort(this.current_data.data,new Comparator<MetaData>(){
-                    public int compare(MetaData arg0, MetaData arg1) {
-                        return arg0.date.compareTo(arg1.date);}
-                });
+                this.current_data.data.sort(Comparator.comparing(arg0 -> arg0.date));
             }
         }
         else if(this.sort_col.equals("new_deaths")){
