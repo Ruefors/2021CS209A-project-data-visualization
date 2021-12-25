@@ -1,51 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <link rel="stylesheet" href="css/charts.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/charts.css?randomId=333">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://lib.baomitu.com/echarts/5.2.0/echarts.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/echarts-gl/2.0.7/echarts-gl.min.js"></script>
 </head>
 
 <body>
-    <el-header height="150px">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-            <a class="navbar-brand" href="/dashTable">Dash_Table</a>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="navbar-brand" href="#">Charts</a>
-                </li>
-                <li class="nav-item">
-                    <div class="dropdown">
-                        <a class="navbar-brand dropdown-toggle" href="#" data-toggle="dropdown">Charts</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </el-header>
-    <div id="body-charts">
-        <div id="center-map"></div>
-        <div id="left-chart">
-            <div id="left-top"></div>
-            <div id="left-bottom"></div>
-        </div>
-        <div id="right-chart">
-            <div id="right-top"></div>
-            <div id="right-bottom"></div>
-        </div>
+    <div id="charts">
+        <el-container>
+            <el-header height="150px">
+                <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+                    <a class="navbar-brand" href="/dashTable">Dash_Table</a>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="navbar-brand" href="#">Charts</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a class="navbar-brand dropdown-toggle" href="#" data-toggle="dropdown">Charts</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Link 1</a>
+                                    <a class="dropdown-item" href="#">Link 2</a>
+                                    <a class="dropdown-item" href="#">Link 3</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </el-header>
+            Coronavirus (COVID-19) Dashboard
+            <el-main id="center-map">
+            </el-main>
+            <el-main id="center-charts">
+            </el-main>
+        </el-container>
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -68,40 +67,448 @@
     </div>
 </body>
 <script type="text/javascript">
+    new Vue({
+        el: '#charts',
+    })
     let dom = document.getElementById("center-map");
     let myChart = echarts.init(dom);
     let dom1 = document.getElementById('detials-charts');
     let myChart1 = echarts.init(dom1);
+    var data = [{
+        "time": 2020,
+        "data": [{
+            "name": "United States",
+            "value": [1025000, 31.222, "美国"]
+        },
+        {
+            "name": "Russia",
+            "value": [433412, 13.202, "俄国"]
+        },
+        {
+            "name": "Japan",
+            "value": [209071, 6.369, "日本"]
+        },
+        {
+            "name": "Germany",
+            "value": [208867, 6.362, "德国"]
+        },
+        {
+            "name": "France",
+            "value": [146982, 4.477, "法国"]
+        },
+        {
+            "name": "United Kingdom",
+            "value": [124970, 3.807, "英国"]
+        },
+        {
+            "name": "Italy",
+            "value": [109260, 3.328, "意大利"]
+        },
+        {
+            "name": "China",
+            "value": [91506, 2.787, "中国"]
+        },
+        {
+            "name": "Canada",
+            "value": [86303, 2.629, "加拿大"]
+        },
+        {
+            "name": "India",
+            "value": [61470, 1.873, "印度"]
+        }
+        ]
+    },
+    {
+        "time": 2019,
+        "data": [{
+            "name": "United States",
+            "value": [2768900, 23.337, "美国"]
+        },
+        {
+            "name": "Japan",
+            "value": [1086988, 9.027, "日本"]
+        },
+        {
+            "name": "Russia",
+            "value": [940038, 7.923, "俄国"]
+        },
+        {
+            "name": "Germany",
+            "value": [919651, 6.253, "德国"]
+        },
+        {
+            "name": "France",
+            "value": [691157, 5.825, "法国"]
+        },
+        {
+            "name": "United Kingdom",
+            "value": [541917, 4.567, "英国"]
+        },
+        {
+            "name": "Italy",
+            "value": [459811, 3.875, "意大利"]
+        },
+        {
+            "name": "China",
+            "value": [306520, 2.583, "中国"]
+        },
+        {
+            "name": "Canada",
+            "value": [268889, 2.266, "加拿大"]
+        },
+        {
+            "name": "Mexico",
+            "value": [227664, 1.919, "墨西哥"]
+        }
+        ]
+    },
+    {
+        "time": 2018,
+        "data": [{
+            "name": "United States",
+            "value": [5754800, 25.921, "美国"]
+        },
+        {
+            "name": "Japan",
+            "value": [3103698, 13.774, "日本"]
+        },
+        {
+            "name": "Germany",
+            "value": [1714447, 7.722, "德国"]
+        },
+        {
+            "name": "France",
+            "value": [1244419, 5.605, "法国"]
+        },
+        {
+            "name": "Italy",
+            "value": [1133465, 5.105, "意大利"]
+        },
+        {
+            "name": "United Kingdom",
+            "value": [1012617, 4.561, "英国"]
+        },
+        {
+            "name": "Russia",
+            "value": [775810, 3.501, "俄国"]
+        },
+        {
+            "name": "Canada",
+            "value": [582735, 2.625, "加拿大"]
+        },
+        {
+            "name": "Spain",
+            "value": [520938, 2.346, "西班牙"]
+        },
+        {
+            "name": "China",
+            "value": [404494, 1.822, "中国"]
+        }
+        ]
+    },
+    {
+        "time": 2017,
+        "data": [{
+            "name": "United States",
+            "value": [9898800, 30.659, "美国"]
+        },
+        {
+            "name": "Japan",
+            "value": [4731199, 14.456, "日本"]
+        },
+        {
+            "name": "Germany",
+            "value": [1886400, 5.843, "德国"]
+        },
+        {
+            "name": "United Kingdom",
+            "value": [1477132, 4.575, "英国"]
+        },
+        {
+            "name": "France",
+            "value": [1326333, 4.108, "法国"]
+        },
+        {
+            "name": "China",
+            "value": [1192836, 3.695, "中国"]
+        },
+        {
+            "name": "Italy",
+            "value": [1097343, 3.399, "意大利"]
+        },
+        {
+            "name": "Canada",
+            "value": [724914, 2.245, "加拿大"]
+        },
+        {
+            "name": "Brazil",
+            "value": [644729, 1.997, "巴西"]
+        },
+        {
+            "name": "Mexico",
+            "value": [636731, 1.972, "墨西哥"]
+        }
+        ]
+    },
+    {
+        "time": 2016,
+        "data": [{
+            "name": "United States",
+            "value": [14419600, 22.679, "美国"]
+        },
+        {
+            "name": "China",
+            "value": [5951462, 9.360, "中国"]
+        },
+        {
+            "name": "Japan",
+            "value": [5488424, 8.632, "日本"]
+        },
+        {
+            "name": "Germany",
+            "value": [3306028, 5.200, "德国"]
+        },
+        {
+            "name": "France",
+            "value": [2565755, 4.035, "法国"]
+        },
+        {
+            "name": "United Kingdom",
+            "value": [2266049, 3.564, "英国"]
+        },
+        {
+            "name": "Brazil",
+            "value": [2143035, 3.371, "巴西"]
+        },
+        {
+            "name": "Italy",
+            "value": [2056941, 3.235, "意大利"]
+        },
+        {
+            "name": "India",
+            "value": [1678297, 2.640, "印度"]
+        },
+        {
+            "name": "Canada",
+            "value": [1577040, 2.480, "加拿大"]
+        }
+        ]
+    }
+    ]
     var ROOT_PATH =
         'http://127.0.0.1:8081/json/';
     $.get(ROOT_PATH + 'world.json', function (worldjs) {
         echarts.registerMap('world', worldjs);
-        option = {
-            tooltip: {
-                trigger: 'item',
-                showDelay: 0,
-                transitionDuration: 0.2
-            },
-            series: [
-                {
-                    name: 'world series',
-                    type: 'map',
-                    map: 'world',
-                    roam: true,
-                    zoom: 1.25,
-                    itemStyle: {
+        var option = {
+            baseOption: {
+                animationDurationUpdate: 1000,
+                animationEasingUpdate: 'quinticInOut',
+                timeline: {
+                    axisType: 'category',
+                    orient: 'vertical',
+                    autoPlay: true,
+                    inverse: true,
+                    playInterval: 5000,
+                    left: null,
+                    right: 5,
+                    top: 20,
+                    bottom: 20,
+                    width: 46,
+                    height: null,
+                    label: {
+                        normal: {
+                            textStyle: {
+                                color: '#ddd'
+                            }
+                        },
                         emphasis: {
-                            areaColor: '#DF013A',
-                            borderWidth: 1,
-                            borderColor: '#6E6E6E'
+                            textStyle: {
+                                color: '#fff'
+                            }
                         }
                     },
-                    data: [
-
-                    ]
-                }
-            ]
+                    symbol: 'none',
+                    lineStyle: {
+                        color: '#555'
+                    },
+                    checkpointStyle: {
+                        color: '#bbb',
+                        borderColor: '#777',
+                        borderWidth: 1
+                    },
+                    controlStyle: {
+                        showNextBtn: false,
+                        showPrevBtn: false,
+                        normal: {
+                            color: '#666',
+                            borderColor: '#666'
+                        },
+                        emphasis: {
+                            color: '#aaa',
+                            borderColor: '#aaa'
+                        }
+                    },
+                    data: data.map(function (ele) {
+                        return ele.time
+                    })
+                },
+                tooltip: {
+                    formatter: function (params) {
+                        if ('value' in params.data) {
+                            return params.name + ': ' + params.data.value[0];
+                        }
+                    }
+                },
+                grid: {
+                    left: '12%',
+                    right: '45%',
+                    top: '70%',
+                    bottom: 20
+                },
+                xAxis: {},
+                yAxis: {},
+                series: [
+                    {
+                        id: 'map',
+                        name: 'world series',
+                        type: 'map',
+                        map: 'world',
+                        roam: true,
+                        zoom: 1.5,
+                        top: '10%',
+                        bottom: '50%',
+                        itemStyle: {
+                            normal: {
+                                areaColor: '#ffeece',
+                                borderWidth: 0.5,
+                                borderColor: '#000000'
+                            },
+                            emphasis: {
+                                areaColor: '#DF013A',
+                                borderWidth: 1,
+                                borderColor: '#000000'
+                            }
+                        },
+                        data: []
+                    },
+                    {
+                        id: 'bar',
+                        type: 'bar',
+                        tooltip: {
+                            show: false
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'right',
+                                textStyle: {
+                                    color: '#000000'
+                                }
+                            }
+                        },
+                        data: []
+                    },
+                    {
+                        id: 'pie',
+                        type: 'pie',
+                        radius: ['8%', '20%'],
+                        center: ['75%', '85%'],
+                        roseType: 'radius',
+                        tooltip: {
+                            formatter: '{b} {d}%'
+                        },
+                        data: [],
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    color: '#000000'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                lineStyle: {
+                                    color: '#000000'
+                                }
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                borderColor: 'rgba(0,0,0,0.3)',
+                                borderSize: 1
+                            }
+                        }
+                    }
+                ]
+            },
+            options: []
         };
+        for (var i = 0; i < data.length; i++) {
+            //计算其余国家GDP
+            var restPercent = 100;
+            var restValue = 0;
+            data[i].data.forEach(function (ele) {
+                restPercent = restPercent - ele.value[1];
+            });
+            restValue = data[i].data[0].value[0] * (restPercent / data[i].data[0].value[1]);
+            option.options.push(
+                {
+                    visualMap: [{
+                        dimension: 0,
+                        left: 10,
+                        itemWidth: 12,
+                        min: data[i].data[9].value[0],
+                        max: data[i].data[0].value[0],
+                        text: ['High', 'Low'],
+                        textStyle: {
+                            color: '#000000'
+                        },
+                        inRange: {
+                            color: ['#b2d1ff', '#98c1ff', '#6ea8fd', '#4791ff', '#3887ff', '#1170ff', '#0076ad']
+                        }
+                    }],
+                    xAxis: {
+                        type: 'value',
+                        boundaryGap: [0, 0.1],
+                        axisLabel: {
+                            show: false,
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        axisLabel: {
+                            textStyle: {
+                                color: '#000000'
+                            }
+                        },
+                        data: data[i].data.map(function (ele) {
+                            return ele.value[2]
+                        }).reverse()
+                    },
+                    series: [{
+                        id: 'map',
+                        data: data[i].data
+                    }, {
+                        id: 'bar',
+                        data: data[i].data.map(function (ele) {
+                            return ele.value[0]
+                        }).sort(function (a, b) {
+                            return a > b
+                        })
+                    }, {
+                        id: 'pie',
+                        data: data[i].data.map(function (ele) {
+                            return {
+                                name: ele.value[2],
+                                value: ele.value
+                            }
+                        }).concat({
+                            name: '其他国家',
+                            value: restValue
+                        }),
+                    }]
+                })
+        }
         myChart.setOption(option);
         myChart.on('click', function (params) {
             $("#myModalLabel").empty();
