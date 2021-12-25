@@ -24,7 +24,7 @@ public class DatavizController {
     public CovidData hello() {
         df = new DataFilter();
         df.original_data= new CovidData();
-        df.original_data.readData("D:\\gitlib\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\static\\owid-covid-data.csv",",");
+        df.original_data.readData("C:\\Learning\\大四（上）\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\static\\owid-covid-data.csv",",");
         df.current_data = df.original_data;
         Collections.sort(df.current_data.data,new Comparator<MetaData>(){
             public int compare(MetaData arg0, MetaData arg1) {
