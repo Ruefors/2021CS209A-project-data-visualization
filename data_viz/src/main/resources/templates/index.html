@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <!-- import CSS -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <link rel="stylesheet" href="css/index3.css?randomId=444">
+    <link rel="stylesheet" href="css/index.css?randomId=444">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 
 </head>
@@ -38,8 +38,8 @@
                     <el-col :span="6" :offset="6"><div class="grid-content bg-purple"></div></el-col>
                 </el-row>
                 <el-row :gutter="20">
-                    <el-col :span="6" :offset="6"><div class="grid-content bg-purple"></div></el-col>
-                    <el-col :span="6" :offset="6"><div class="grid-content bg-purple"></div></el-col>
+                    <el-col :span="6" :offset="6"><div class="grid-content bg-purple"> </div></el-col>
+                    <el-col :span="3" :offset="8"><div class="grid-content bg-purple"> <el-button @click="getTotalData" type="success" icon="el-icon-download" round>点击下载</el-button></div></el-col>
                 </el-row>
                 <el-row :gutter="20">
                     <el-col :span="10" :offset="12"><div class="grid-content bg-purple">
@@ -58,7 +58,7 @@
             </el-header>
             <el-main height="550px">
                 <template>
-                    <el-table @sort-change='sortChange' :data="tableData" height="450px"  width = "55%"  style="width: 100%">
+                    <el-table id="table" @sort-change='sortChange' :data="tableData" height="450px"  width = "55%"  style="width: 100%">
                         <el-table-column prop="iso_code" label="iso_code" width="180">
                         </el-table-column>
                         <el-table-column prop="country"  label="国家" width="180">
@@ -74,6 +74,7 @@
                         <el-table-column sortable='custom' prop="total_deaths" label="总死亡人数">
                         </el-table-column>
                     </el-table>
+
                 </template>
                 <el-pagination background layout="prev, pager, next, jumper" @current-change="getCurrentPage"
                     :current-page="currentPage" :page-size="pageSize" :total="total">
@@ -91,6 +92,8 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!-- import JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -108,7 +111,7 @@
                 input: '',
                 select: '',
                 alertmsg: '',
-
+                totalData: [],
             }
         },
         mounted: function () {
@@ -158,6 +161,13 @@
                     _this.tableData = resp.data.data
                 })
             },
+            getTotalData(){
+              var _this = this
+                axios.get('/totalData').then(resp => {
+                    _this.totalData = resp.data
+                    _this.exportExcel()
+                })
+            },
             searchData(){
                 var _this = this
                 if(_this.select.length==0){
@@ -166,7 +176,7 @@
                     return
                 }
                 else if(_this.select=='2' && _this.input != ""){
-                    var re = _this.input.match(/^((\d{4})(\/|-)(\d{2})(\/|-)(\d{2}))|(\d{4})(\/|-)(\d{2})|(\d{4})$/);
+                    var re = _this.input.match(/^((\d{4})(\/|-)(\d{2})(\/|-)(\d{2}))|((\d{4})(\/|-)(\d{2}))|(\d{4})$/);
                     if(re == null) {
                         _this.alertmsg = "请输入正确的日期格式，搜索年月日: yyyy-mm-dd or yyyy/mm/dd \n 搜索年月: yyyy-mm or yyyy/mm \n 搜索年: yyyy \n"
                         _this.alert1()
@@ -194,6 +204,15 @@
                     message: h('i', { style: 'color: #6ec8bf'}, _this.alertmsg)
                 });
             },
+             exportExcel() {
+                var _this = this
+                const table = XLSX.utils.json_to_sheet(_this.totalData);
+                delete table.C
+                console.log(table)
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, table, 'table');
+                XLSX.writeFile(wb, 'table.xlsx');
+             },
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
             }

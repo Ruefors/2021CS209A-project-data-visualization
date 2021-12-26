@@ -1,14 +1,19 @@
 package com.dataviz.controller;
 
-import com.dataviz.model.*;
+import com.dataviz.model.MetaData;
+import com.dataviz.model.MetaData2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import com.dataviz.model.DataFilter;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.zip.CheckedInputStream;
 
 @Controller
@@ -73,6 +78,18 @@ public class DatavizController {
     public int pagesize() {
         int s = df.current_data.data.size();
         return s;
+    }
+
+    @RequestMapping(value = "/totalData",method = RequestMethod.GET)
+    @ResponseBody
+    public ArrayList<MetaData2> getTotal() throws ParseException {
+        CovidData c = new CovidData();
+        ArrayList<MetaData2> re= new ArrayList<>();
+        for(MetaData m:df.current_data.data){
+            MetaData2 tmp = new MetaData2(m.iso_code,m.country,m.sdate,m.new_cases,m.new_deaths,m.total_deaths,m.total_cases);
+            re.add(tmp);
+        }
+        return re;
     }
 
     @RequestMapping(value = "/earth",method = RequestMethod.GET)

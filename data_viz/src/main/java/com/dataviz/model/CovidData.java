@@ -56,10 +56,7 @@ public class CovidData {
             public int compare(MetaData arg0, MetaData arg1) {
                 return arg0.new_cases - arg1.new_cases;}
         });
-        Collections.sort(cd.data,new Comparator<MetaData>(){
-            public int compare(MetaData arg0, MetaData arg1) {
-                return arg1.date.compareTo(arg0.date);}
-        });
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = sdf.parse("2019-10-01");
