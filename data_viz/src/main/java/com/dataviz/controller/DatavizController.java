@@ -1,7 +1,6 @@
 package com.dataviz.controller;
 
-import com.dataviz.model.MetaData;
-import com.dataviz.model.MetaData2;
+import com.dataviz.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import com.dataviz.model.DataFilter;
 
 import java.util.Collection;
 import java.util.Collections;

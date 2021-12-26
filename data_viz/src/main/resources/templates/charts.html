@@ -200,11 +200,12 @@
                                 normal: {
                                     textStyle: {
                                         color: '#ddd'
-                                    }
+                                    },
+                                    position: 'right'
                                 },
                                 emphasis: {
                                     textStyle: {
-                                        color: '#fff'
+                                        color: color[3]
                                     }
                                 }
                             },
@@ -214,7 +215,7 @@
                             },
                             checkpointStyle: {
                                 color: '#bbb',
-                                borderColor: '#777',
+                                borderColor: color[3],
                                 borderWidth: 1
                             },
                             controlStyle: {
@@ -225,8 +226,8 @@
                                     borderColor: '#666'
                                 },
                                 emphasis: {
-                                    color: '#aaa',
-                                    borderColor: '#aaa'
+                                    color: color[3],
+                                    borderColor: color[3]
                                 }
                             },
                             data: data.map(function (ele) {
