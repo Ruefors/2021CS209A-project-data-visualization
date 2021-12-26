@@ -6,18 +6,55 @@
         }
         .el-header {
 
-            background-color: #ffffff;
+            background-color: #B3C0D1;
+            color: #333;
+            text-align: center;
+        }
+        .el-footer {
+
+            background-color: #B3C0D1;
+            color: #333;
+            text-align: center;
+        
+          }
+        
+          .el-aside {
+            background-color: #E9EEF3;
             color: #333;
             text-align: center;
 
           }
-        #center-map{
+          .el-main{
             height:750px;
-            background-color: #ebebeb;
+            background-color: #E9EEF3;
+            color: #333;
+            text-align: center;
         }
-        #center-charts{
-            height:850px;
-            background-color: #ffffff;
+        .el-row {
+          margin-bottom: 40px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+        .el-col {
+          border-radius: 4px;
+        }
+        .bg-purple-dark {
+          background: #99a9bf;
+        }
+        .bg-purple {
+          background: #d3dce6;
+        }
+        .bg-purple-light {
+          background: #e5e9f2;
+        }
+        .grid-content {
+          border-radius: 4px;
+          min-height: 50px;
+        }
+        .row-bg {
+          padding: 10px 0;
+          background-color: #f9fafc;
         }
         #myContent {
             top: 20px;

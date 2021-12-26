@@ -1,30 +1,34 @@
 package com.dataviz.controller;
 
-import com.dataviz.model.MetaData;
+import com.dataviz.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import com.dataviz.model.CovidData;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import com.dataviz.model.DataFilter;
+import java.text.ParseException;
+import java.util.*;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.zip.CheckedInputStream;
 
 @Controller
 
 public class DatavizController {
     DataFilter df;
-
+    VizDataFilter vf;
+    public DatavizController(){
+        df = new DataFilter();
+        vf = new VizDataFilter();
+        df.original_data= new CovidData();
+        df.original_data.readData("C:\\Learning\\大四（上）\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\static\\owid-covid-data.csv",",");
+        vf.processingTotalCase(df);
+        vf.processingNewCase(df);
+        vf.processingNewDeath(df);
+        vf.processingTotalDeath(df);
+    }
     @RequestMapping(value = "/inde",method = RequestMethod.GET)
     @ResponseBody
     public CovidData hello() {
-        df = new DataFilter();
-        df.original_data= new CovidData();
-        df.original_data.readData("C:\\Learning\\大四（上）\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\static\\owid-covid-data.csv",",");
         df.current_data = df.original_data;
         Collections.sort(df.current_data.data,new Comparator<MetaData>(){
             public int compare(MetaData arg0, MetaData arg1) {
@@ -74,6 +78,26 @@ public class DatavizController {
     @RequestMapping(value = "/earth",method = RequestMethod.GET)
     public String imgEarth(){
         return "C:\\Learning\\大四（上）\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\templates\\imge\\bg4.jpg";
+    }
+    @RequestMapping(value = "/total_cases",method = RequestMethod.GET)
+    @ResponseBody
+    public ArrayList<VizData> getTotalCases(){
+        return vf.sort(vf.totalCase);
+    }
+    @RequestMapping(value = "/new_cases",method = RequestMethod.GET)
+    @ResponseBody
+    public ArrayList<VizData> getNewCases(){
+        return vf.sort(vf.newCase);
+    }
+    @RequestMapping(value = "/new_deaths",method = RequestMethod.GET)
+    @ResponseBody
+    public ArrayList<VizData> getNewDeaths(){
+        return vf.sort(vf.newDeath);
+    }
+    @RequestMapping(value = "/total_deaths",method = RequestMethod.GET)
+    @ResponseBody
+    public ArrayList<VizData> getTotalDeaths(){
+        return vf.sort(vf.totalDeath);
     }
 
 }
