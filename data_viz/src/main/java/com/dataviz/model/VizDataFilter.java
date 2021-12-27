@@ -2,6 +2,7 @@ package com.dataviz.model;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,5 +99,49 @@ public class VizDataFilter {
                 totalDeath.put(VizData.dateformat.format(d.date), v);
             }
         }
+    }
+    class DateData{
+        public String name;
+        public int value;
+        public DateData(String name,int value){
+            this.name = name;
+            this.value = value;
+        }
+    }
+    public ArrayList<DateData> searchData(String country,String type){
+        ArrayList<DateData> res = new ArrayList<>();
+        if(type.equals("Total Case")){
+            ArrayList<VizData> tmp = sort(totalCase);
+            for(VizData v : tmp){
+                if(v.data.containsKey(country)){
+                    res.add(new DateData(v.date, v.data.get(country)));
+                }
+            }
+        }
+        else if(type.equals("New Case")){
+            ArrayList<VizData> tmp = sort(newCase);
+            for(VizData v : tmp){
+                if(v.data.containsKey(country)){
+                    res.add(new DateData(v.date, v.data.get(country)));
+                }
+            }
+        }
+        else if(type.equals("New Death")){
+            ArrayList<VizData> tmp = sort(newDeath);
+            for(VizData v : tmp){
+                if(v.data.containsKey(country)){
+                    res.add(new DateData(v.date, v.data.get(country)));
+                }
+            }
+        }
+        else if(type.equals("Total Death")){
+            ArrayList<VizData> tmp = sort(totalDeath);
+            for(VizData v : tmp){
+                if(v.data.containsKey(country)){
+                    res.add(new DateData(v.date, v.data.get(country)));
+                }
+            }
+        }
+        return res;
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -113,6 +112,11 @@ public class DatavizController {
     @ResponseBody
     public ArrayList<VizData> getTotalDeaths(){
         return vf.sort(vf.totalDeath);
+    }
+    @GetMapping("/find")
+    @ResponseBody
+    public ArrayList getCountryData(String countryName, String Type){
+        return  vf.searchData(countryName,Type);
     }
 
 }
