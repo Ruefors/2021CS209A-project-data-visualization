@@ -170,7 +170,6 @@
                 var _this = this
                 var DistrictDom = document.getElementById("district-map")
                 var DistrictView = echarts.init(DistrictDom)
-                DistrictView.clear()
                 DistrictView.showLoading();
                 var datas = []
                 for (var i = 0; i < _this.district.length; i++) {
@@ -257,17 +256,6 @@
                             },
                             animationDelay: function (idx) {
                                 return idx * 10 + 300;
-                            }
-                        },
-                        {
-                            name: _this.district[4],
-                            type: 'bar',
-                            data: datas[4],
-                            emphasis: {
-                                focus: 'series'
-                            },
-                            animationDelay: function (idx) {
-                                return idx * 10 + 400;
                             }
                         },
                         {

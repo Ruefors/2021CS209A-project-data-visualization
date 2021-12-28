@@ -87,11 +87,6 @@ public class DatavizController {
         }
         return re;
     }
-
-    @RequestMapping(value = "/earth",method = RequestMethod.GET)
-    public String imgEarth(){
-        return ".\\src\\main\\resources\\templates\\imge\\bg4.jpg";
-    }
     @RequestMapping(value = "/total_cases",method = RequestMethod.GET)
     @ResponseBody
     public ArrayList<VizData> getTotalCases(){
