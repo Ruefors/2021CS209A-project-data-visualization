@@ -22,7 +22,7 @@ public class DatavizController {
         df = new DataFilter();
         vf = new VizDataFilter();
         df.original_data= new CovidData();
-        df.original_data.readData("C:\\Learning\\大四（上）\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\static\\owid-covid-data.csv",",");
+        df.original_data.readData(".\\src\\main\\resources\\static\\owid-covid-data.csv",",");
         vf.processingTotalCase(df);
         vf.processingNewCase(df);
         vf.processingNewDeath(df);
@@ -30,7 +30,7 @@ public class DatavizController {
     }
     @RequestMapping(value = "/inde",method = RequestMethod.GET)
     @ResponseBody
-    public CovidData hello() {
+    public CovidData helloIndex() {
         df.current_data = df.original_data;
         Collections.sort(df.current_data.data,new Comparator<MetaData>(){
             public int compare(MetaData arg0, MetaData arg1) {
@@ -43,7 +43,7 @@ public class DatavizController {
 
     @GetMapping("/page")
     @ResponseBody
-    public CovidData argParam(Integer ID) {
+    public CovidData getPage(Integer ID) {
         int pageSize = 20;
         if(ID == df.current_data.data.size()/20+1){
             pageSize = df.current_data.data.size() - (ID-1)*20;
@@ -54,11 +54,10 @@ public class DatavizController {
 
     @GetMapping("/sort")
     @ResponseBody
-    public String sort(String prop, String order) {
+    public void sort(String prop, String order) {
         df.sort_col = prop;
         df.order = order;
         df.SortData();
-        return "hhh";
     }
 
     @GetMapping("/search")
@@ -91,7 +90,7 @@ public class DatavizController {
 
     @RequestMapping(value = "/earth",method = RequestMethod.GET)
     public String imgEarth(){
-        return "C:\\Learning\\大四（上）\\2021CS209A-project-data-visualization\\data_viz\\src\\main\\resources\\templates\\imge\\bg4.jpg";
+        return ".\\src\\main\\resources\\templates\\imge\\bg4.jpg";
     }
     @RequestMapping(value = "/total_cases",method = RequestMethod.GET)
     @ResponseBody
